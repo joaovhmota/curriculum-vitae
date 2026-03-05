@@ -1,5 +1,5 @@
 import { Mail } from "lucide-react";
-import { useLocale } from "../contexts/LocaleContext";
+import { useLocale } from "../contexts/localeContext";
 
 export const Contact = () => {
   const { t } = useLocale();

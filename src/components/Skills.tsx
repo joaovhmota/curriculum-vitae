@@ -1,5 +1,5 @@
 import { Code2 } from "lucide-react";
-import { useLocale } from "../contexts/LocaleContext";
+import { useLocale } from "../contexts/localeContext";
 
 export const Skills = () => {
   const { t } = useLocale();

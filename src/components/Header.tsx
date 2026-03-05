@@ -1,5 +1,5 @@
 import { Sparkles } from "lucide-react";
-import { useLocale } from "../contexts/LocaleContext";
+import { useLocale } from "../contexts/localeContext";
 
 export const Header = () => {
   const { t } = useLocale();

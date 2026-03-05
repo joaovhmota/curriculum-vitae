@@ -1,5 +1,5 @@
 import { User } from "lucide-react";
-import { useLocale } from "../contexts/LocaleContext";
+import { useLocale } from "../contexts/localeContext";
 
 export const About = () => {
   const { t } = useLocale();

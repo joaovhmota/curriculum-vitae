@@ -1,4 +1,4 @@
-import { useLocale } from "../contexts/LocaleContext";
+import { useLocale } from "../contexts/localeContext";
 
 export const Footer = () => {
   const { t } = useLocale();

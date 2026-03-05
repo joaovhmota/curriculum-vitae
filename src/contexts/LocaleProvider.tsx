@@ -1,7 +1,5 @@
 import {
-  createContext,
   useCallback,
-  useContext,
   useEffect,
   useMemo,
   useState,
@@ -11,18 +9,10 @@ import {
   getBrowserLocale,
   translations,
   type Locale,
-  type Translations,
 } from "../data/translations";
+import { LocaleContext, type LocaleContextValue } from "./localeContext";
 
 const STORAGE_KEY = "portfolio-locale";
-
-type LocaleContextValue = {
-  locale: Locale;
-  setLocale: (locale: Locale) => void;
-  t: Translations;
-};
-
-const LocaleContext = createContext<LocaleContextValue | null>(null);
 
 function getStoredLocale(): Locale | null {
   if (typeof localStorage === "undefined") return null;
@@ -31,7 +21,7 @@ function getStoredLocale(): Locale | null {
   return null;
 }
 
-export function LocaleProvider({ children }: { children: ReactNode; }) {
+export function LocaleProvider({ children }: { children: ReactNode }) {
   const [locale, setLocaleState] = useState<Locale>(() => {
     return getStoredLocale() ?? getBrowserLocale();
   });
@@ -59,12 +49,4 @@ export function LocaleProvider({ children }: { children: ReactNode; }) {
   return (
     <LocaleContext.Provider value={value}>{children}</LocaleContext.Provider>
   );
-}
-
-export function useLocale(): LocaleContextValue {
-  const ctx = useContext(LocaleContext);
-  if (!ctx) {
-    throw new Error("useLocale must be used within LocaleProvider");
-  }
-  return ctx;
 }

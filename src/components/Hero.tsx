@@ -6,7 +6,7 @@ import {
   Code,
   type LucideIcon,
 } from "lucide-react";
-import { useLocale } from "../contexts/LocaleContext";
+import { useLocale } from "../contexts/localeContext";
 
 const heroTitleIcons: Record<string, LucideIcon> = {
   Coffee,
