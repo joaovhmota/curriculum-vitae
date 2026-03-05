@@ -2,7 +2,8 @@ name: 🚀 Continuous Deployment
 
 on:
   workflow_run:
-    workflows: ["🛠️ Continuous Integration"]
+    workflows:
+      - 🛠️ Continuous Integration
     types:
       - completed
 
@@ -24,6 +25,7 @@ jobs:
         with:
           name: dist
           path: dist
+          run-id: ${{ github.event.workflow_run.id }}
 
       - name: 📦 Upload Pages Artifact
         uses: actions/upload-pages-artifact@v3
