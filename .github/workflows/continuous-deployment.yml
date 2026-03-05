@@ -1,9 +1,10 @@
-name: 🚀 Continuous Deployment
+name: CD
+run-name: 🚀 Continuous Deployment
 
 on:
   workflow_run:
     workflows:
-      - 🛠️ Continuous Integration
+      - CI
     types:
       - completed
 
@@ -15,6 +16,8 @@ permissions:
 
 jobs:
   continuous-deployment:
+    name: 🚀 Deploy
+
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     environment:
@@ -29,7 +32,7 @@ jobs:
           run-id: ${{ github.event.workflow_run.id }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: 📦 Upload Pages Artifact
+      - name: 📦 Upload pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: dist
