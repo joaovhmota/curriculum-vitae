@@ -5,17 +5,39 @@ on:
   push:
     branches:
       - main
+    paths:
+      - "src/**"
+      - "public/**"
+      - "index.html"
+      - "package.json"
+      - "pnpm-lock.yaml"
+      - "vite.config.*"
+      - "tsconfig*.json"
+      - ".eslintrc*"
+      - ".eslintignore"
+      - ".github/workflows/continuous-integration.yml"
   pull_request:
     branches:
       - main
+    paths:
+      - "src/**"
+      - "public/**"
+      - "index.html"
+      - "package.json"
+      - "pnpm-lock.yaml"
+      - "vite.config.*"
+      - "tsconfig*.json"
+      - ".eslintrc*"
+      - ".eslintignore"
+      - ".github/workflows/continuous-integration.yml"
   workflow_dispatch:
 
 permissions:
   contents: read
 
 jobs:
-  continuous-integration:
-    name: 🛠️ Integration
+  lint:
+    name: 🧹 Lint
     runs-on: ubuntu-latest
 
     steps:
@@ -26,24 +48,47 @@ jobs:
         uses: pnpm/action-setup@v2
         with:
           run_install: false
-          
+
       - name: 🛠️ Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'pnpm'
+          cache: "pnpm"
 
       - name: 📦 Install Dependencies
         run: pnpm install --frozen-lockfile
 
       - name: 🧹 Lint Code
-        run: pnpm run lint
+        run: pnpm run --if-present lint
+
+  build:
+    name: 🏗️ Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
+
+      - name: 📦 Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          run_install: false
+
+      - name: 🛠️ Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
+
+      - name: 📦 Install Dependencies
+        run: pnpm install --frozen-lockfile
 
       - name: 🏗️ Build Application
         run: pnpm build
-      
+
       - name: 📦 Upload build artifact
         uses: actions/upload-artifact@v4
         with:
           name: dist
           path: dist
+          retention-days: 1
