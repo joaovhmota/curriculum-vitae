@@ -1,23 +1,10 @@
-@import "tailwindcss";
-
-@theme {
-  --font-sans: "DM Sans", system-ui, sans-serif;
-  --color-surface: #0f0f0f;
-  --color-surface-elevated: #1a1a1a;
-  --color-border: #2a2a2a;
-  --color-muted: #737373;
-  --color-accent: #3b82f6;
-  --color-accent-hover: #2563eb;
-  --color-text: #fafafa;
-  --color-text-muted: #a3a3a3;
+html, body {
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+    padding: 0;
 }
 
-@layer base {
-  html {
-    scroll-behavior: smooth;
-  }
-  body {
-    @apply antialiased bg-surface text-text;
-    font-family: var(--font-sans);
-  }
+* {
+    user-select: none;
 }

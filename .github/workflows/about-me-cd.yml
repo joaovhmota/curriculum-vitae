@@ -1,10 +1,9 @@
-name: 🚀 Continuous Deployment
-run-name: "🚀 Run №${{ github.run_number }}, ${{ github.event_name }} by ${{ github.actor }} (Attempt №${{ github.run_attempt }})"
+name: about-me-cd
 
 on:
   workflow_run:
     workflows:
-      - 🛠️ Continuous Integration
+      - about-me-ci
     branches:
       - main
     types:
@@ -22,7 +21,7 @@ permissions:
 
 jobs:
   continuous-deployment:
-    name: 🚀 Deploy
+    name: Deploy
 
     if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event != 'pull_request' }}
     runs-on: ubuntu-latest
@@ -30,7 +29,7 @@ jobs:
       name: github-pages
 
     steps:
-      - name: 📥 Download build artifact
+      - name: Download build artifact
         uses: actions/download-artifact@v4
         with:
           name: dist
@@ -38,11 +37,11 @@ jobs:
           run-id: ${{ github.event.workflow_run.id }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: 📦 Upload pages artifact
+      - name: Upload pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: dist
 
-      - name: 🌍 Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

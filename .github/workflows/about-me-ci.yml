@@ -1,5 +1,4 @@
-name: 🛠️ Continuous Integration
-run-name: "🛠️ Run №${{ github.run_number }}, ${{ github.event_name }} by ${{ github.actor }} (Attempt №${{ github.run_attempt }})"
+name: about-me-ci
 
 concurrency:
   group: continuous-integration
@@ -41,56 +40,58 @@ permissions:
 
 jobs:
   lint:
-    name: 🧹 Lint
+    name: Lint
     runs-on: ubuntu-latest
 
     steps:
-      - name: 📥 Checkout Code
+      - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: 📦 Setup pnpm
+      - name: Setup pnpm
         uses: pnpm/action-setup@v2
         with:
           run_install: false
 
-      - name: 🛠️ Setup Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: "pnpm"
 
-      - name: 📦 Install Dependencies
+      - name: Install Dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: 🧹 Lint Code
+      - name: Lint Code
         run: pnpm run --if-present lint
 
   build:
-    name: 🏗️ Build
+    name: Build
     runs-on: ubuntu-latest
 
     steps:
-      - name: 📥 Checkout Code
+      - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: 📦 Setup pnpm
+      - name: Setup pnpm
         uses: pnpm/action-setup@v2
         with:
           run_install: false
 
-      - name: 🛠️ Setup Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: "pnpm"
 
-      - name: 📦 Install Dependencies
+      - name: Install Dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: 🏗️ Build Application
+      - name: Build Application
         run: pnpm build
+        env:
+          VITE_GITHUB_TOKEN: ${{ secrets.VITE_GITHUB_TOKEN }}
 
-      - name: 📦 Upload build artifact
+      - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
           name: dist
